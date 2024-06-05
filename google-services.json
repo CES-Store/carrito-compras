@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "629708983717",
+    "project_id": "flutterces",
+    "storage_bucket": "flutterces.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:629708983717:android:cf3ca13936218fc380ec4c",
+        "android_client_info": {
+          "package_name": "com.example.flutter_ces"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629708983717-rp8897vptrp1df25tsb73iefdiu40tj2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhuqVC6DROkT9niP1iT8OYXNTe-P1fXME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629708983717-rp8897vptrp1df25tsb73iefdiu40tj2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "629708983717-akvlu1hs0fj5hivgnv3dcuohkkgbqdpm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterCes"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
