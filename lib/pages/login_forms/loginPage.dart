@@ -112,6 +112,8 @@ class _DatosState extends State<Datos> {
       final String password = _passwordController.text.trim();
       for (var user in users) {
         if (user['email'] == email && user['password'] == password) {
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('current_user_email', email);
           Navigator.push(
               context,
               StackPagesRoute(
