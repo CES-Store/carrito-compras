@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ces/components/stack_pages_route.dart';
+import 'package:flutter_ces/pages/carrito_forms/carrito_provider.dart';
 import 'package:flutter_ces/pages/compra_forms/compra_form_summary.dart';
 import 'package:flutter_ces/pages/home_forms/productosPage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../../styles/styles_home.dart';
 
 class CompraPage extends StatelessWidget {
+  final int imageIndex;
 
-final int imageIndex;
-
-const CompraPage({required this.imageIndex});
+  const CompraPage({required this.imageIndex});
 
   @override
   Widget build(BuildContext context) {
-
     switch (imageIndex) {
       case 1:
         return Page1();
@@ -29,17 +29,23 @@ const CompraPage({required this.imageIndex});
       case 4:
         return Page4();
       default:
-      return Container();
-
+        return Container();
     }
   }
 }
-      
+
 class Page1 extends StatelessWidget {
   const Page1({super.key});
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
+    final producto = Producto(
+      index: 1,
+      nombre: 'PS5 Side',
+      precio: 499.99,
+      info: 'PlayStation 5 Digital Edition',
+      imagen: 'assets/ps5_side.png',
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -77,7 +83,7 @@ class Page1 extends StatelessWidget {
           ),
           color: Styles.bodyBackgroundColor,
         ),
-        child: Contenido(imagen: 'assets/ps5_side.png'),
+        child: Contenido(imagen: 'assets/ps5_side.png', producto: producto),
       ),
     );
   }
@@ -88,19 +94,26 @@ class Page2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
+    final producto = Producto(
+      index: 2,
+      nombre: 'PS5',
+      precio: 300,
+      info: 'PlayStation 5 Digital Edition',
+      imagen: 'assets/ps5.png',
+    );
 
     return Scaffold(
-    appBar: AppBar(
-      leading: IconButton(
-        onPressed: () => _handleBack(context),
-        icon: Icon(Icons.arrow_back_ios),
-        color: Styles.appBarIconColor,
-      ),
-      toolbarHeight: 100,
-      centerTitle: true,
-      title: Image.asset(
-        'assets/ps5_logo.png',
-        width: width / Styles.appBarTitleWidthFraction,
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => _handleBack(context),
+          icon: Icon(Icons.arrow_back_ios),
+          color: Styles.appBarIconColor,
+        ),
+        toolbarHeight: 100,
+        centerTitle: true,
+        title: Image.asset(
+          'assets/ps5_logo.png',
+          width: width / Styles.appBarTitleWidthFraction,
         ),
         backgroundColor: Styles.pageAppBarBackgroundColor,
         actions: [
@@ -115,18 +128,18 @@ class Page2 extends StatelessWidget {
         ],
         elevation: 0,
       ),
-    body: Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40),
-          topRight: Radius.circular(40),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
+          color: Styles.bodyBackgroundColor,
         ),
-        color: Styles.bodyBackgroundColor,
+        child: Contenido(imagen: 'assets/ps5.png', producto: producto),
       ),
-      child: Contenido(imagen: 'assets/ps5.png'),
-    ),
     );
   }
 }
@@ -136,45 +149,53 @@ class Page3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
+    final producto = Producto(
+      index: 3,
+      nombre: 'Game console',
+      precio: 70,
+      info: 'DualSense Wireless Controller',
+      imagen: 'assets/control.png',
+    );
 
     return Scaffold(
-    appBar: AppBar(
-      leading: IconButton(
-        onPressed: () => _handleBack(context),
-        icon: Icon(Icons.arrow_back_ios),
-         color: Styles.appBarIconColor,
-      ),
-      toolbarHeight: 100,
-      centerTitle: true,
-      title: Image.asset(
-        'assets/ps5_logo.png',
-        width: width / Styles.appBarTitleWidthFraction,
-        ),
-        backgroundColor: Styles.pageAppBarBackgroundColor,
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.settings_outlined),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => _handleBack(context),
+          icon: Icon(Icons.arrow_back_ios),
           color: Styles.appBarIconColor,
         ),
-        SizedBox(
-          width: 10,
-        )
-      ],
-      elevation: 0,
-    ),
-    body: Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40),
-          topRight: Radius.circular(40),
+        toolbarHeight: 100,
+        centerTitle: true,
+        title: Image.asset(
+          'assets/ps5_logo.png',
+          width: width / Styles.appBarTitleWidthFraction,
         ),
-         color: Styles.bodyBackgroundColor,
+        backgroundColor: Styles.pageAppBarBackgroundColor,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.settings_outlined),
+            color: Styles.appBarIconColor,
+          ),
+          SizedBox(
+            width: 10,
+          )
+        ],
+        elevation: 0,
       ),
-      child: Contenido(imagen: 'assets/control_compra.png'),
-    ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
+          color: Styles.bodyBackgroundColor,
+        ),
+        child:
+            Contenido(imagen: 'assets/control_compra.png', producto: producto),
+      ),
     );
   }
 }
@@ -184,54 +205,61 @@ class Page4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
+    final producto = Producto(
+      index: 4,
+      nombre: 'Game console',
+      precio: 150,
+      info: 'Wireless Headset',
+      imagen: 'assets/audifono.png',
+    );
 
     return Scaffold(
-    appBar: AppBar(
-      leading: IconButton(
-        onPressed: () => _handleBack(context),
-        icon: Icon(Icons.arrow_back_ios),
-        color: Styles.appBarIconColor,
-      ),
-      toolbarHeight: 100,
-      centerTitle: true,
-      title: Image.asset(
-        'assets/ps5_logo.png',
-        width: width / Styles.appBarTitleWidthFraction,
-        ),
-        backgroundColor: Styles.pageAppBarBackgroundColor,
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.settings_outlined),
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => _handleBack(context),
+          icon: Icon(Icons.arrow_back_ios),
           color: Styles.appBarIconColor,
         ),
-        SizedBox(
-          width: 10,
-        )
-      ],
-      elevation: 0,
-    ),
-    body: Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40),
-          topRight: Radius.circular(40),
+        toolbarHeight: 100,
+        centerTitle: true,
+        title: Image.asset(
+          'assets/ps5_logo.png',
+          width: width / Styles.appBarTitleWidthFraction,
         ),
-        color: Styles.bodyBackgroundColor,
+        backgroundColor: Styles.pageAppBarBackgroundColor,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.settings_outlined),
+            color: Styles.appBarIconColor,
+          ),
+          SizedBox(
+            width: 10,
+          )
+        ],
+        elevation: 0,
       ),
-      child: Contenido(imagen: 'assets/audifono.png'),
-    ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(40),
+            topRight: Radius.circular(40),
+          ),
+          color: Styles.bodyBackgroundColor,
+        ),
+        child: Contenido(imagen: 'assets/audifono.png', producto: producto),
+      ),
     );
   }
 }
 
 class Contenido extends StatelessWidget {
-
   final String imagen;
+  final Producto producto;
 
-  const Contenido({super.key, required this.imagen});
+  const Contenido({super.key, required this.imagen, required this.producto});
 
   @override
   Widget build(BuildContext context) {
@@ -249,7 +277,7 @@ class Contenido extends StatelessWidget {
             child: Image.asset(imagen),
           ),
           Botones(),
-          Comprar(),
+          Comprar(producto: producto),
         ],
       ),
     );
@@ -281,10 +309,10 @@ class Botones extends StatelessWidget {
           SizedBox(
             width: Styles.buttonSpacing,
           ),
-           Boton(
+          Boton(
             icono: 'assets/sensor.svg',
             texto: 'Motion Sensor',
-           ),  
+          ),
         ],
       ),
     );
@@ -292,53 +320,52 @@ class Botones extends StatelessWidget {
 }
 
 class Comprar extends StatelessWidget {
-  const Comprar({super.key});
+  final Producto producto;
 
-   @override
+  const Comprar({super.key, required this.producto});
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: Styles.containerHeight,
       decoration: BoxDecoration(
-        color: Styles.containerColor,
+        color: const Color(0xff142047).withOpacity(0.1),
         borderRadius: BorderRadius.circular(Styles.containerBorderRadius),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Container(
-            alignment: Alignment.center,
-            height: Styles.containerHeight,
-            width: Styles.containerWidth,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(Styles.containerBorderRadius),
-              color: Styles.containerChildColor,
-            ),
-            child: Text(
-              '\$70',
-              style: TextStyle(
-                color: Styles.textColor,
-                fontWeight: Styles.textFontWeight,
-                fontSize: Styles.textSize,
-              ),
-            ),
-          ),
-          Spacer(),
-          TextButton(
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all(EdgeInsets.all(10)),
-            ),
-            onPressed: () => opcionCompra(context), 
-            child: Text(
-              'Comprar ahora',
-              style: TextStyle(
-                color: Styles.textColor,
-                fontWeight: Styles.textFontWeight,
-                fontSize: Styles.textSize,
-              ),
+          ElevatedButton.icon(
+            onPressed: () {
+              Provider.of<CarritoProvider>(context, listen: false)
+                  .agregarProducto(producto);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Producto agregado correctamente'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            },
+            icon: Icon(Icons.shopping_cart, color: Colors.white),
+            label: Text(''),
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              backgroundColor: const Color(0xff142047),
             ),
           ),
-          Spacer(),
-        ]
+          ElevatedButton.icon(
+            onPressed: () {
+              opcionCompra(context);
+            },
+            icon: Icon(Icons.attach_money, color: Colors.white),
+            label: Text(''),
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              backgroundColor: const Color(0xff142047),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -394,11 +421,11 @@ class Boton extends StatelessWidget {
   }
 }
 
-PersistentBottomSheetController<dynamic> opcionCompra(BuildContext context){
+PersistentBottomSheetController<dynamic> opcionCompra(BuildContext context) {
   return showBottomSheet(
-    context: context, 
-    builder: (context){
-      return  Wrap(
+    context: context,
+    builder: (context) {
+      return Wrap(
         children: [
           ListTile(
             title: Text('Google Play'),
@@ -415,25 +442,27 @@ PersistentBottomSheetController<dynamic> opcionCompra(BuildContext context){
           ListTile(
             title: Text('Paypal'),
             leading: FaIcon(FontAwesomeIcons.paypal),
-            trailing: FaIcon(FontAwesomeIcons.moneyBill,),
+            trailing: FaIcon(
+              FontAwesomeIcons.moneyBill,
+            ),
             onTap: () => _handleSubmit(context),
           ),
         ],
       );
     },
-   );
-  }
+  );
+}
 
-  void _handleSubmit(BuildContext context) {
-    Navigator.push(
-      context,
-      StackPagesRoute(
-        previousPages: [CompraPage(imageIndex: 1)],
-        enterPage: CompraFormSummary(),
-      ),
-    );
-  }
+void _handleSubmit(BuildContext context) {
+  Navigator.push(
+    context,
+    StackPagesRoute(
+      previousPages: [CompraPage(imageIndex: 1)],
+      enterPage: CompraFormSummary(),
+    ),
+  );
+}
 
-  void _handleBack(BuildContext context) {
-    Navigator.of(context).pop();
-  }
+void _handleBack(BuildContext context) {
+  Navigator.of(context).pop();
+}

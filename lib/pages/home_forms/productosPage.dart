@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_ces/pages/carrito_forms/carritoPage.dart';
 import 'package:flutter_ces/pages/home_forms/compraPage.dart';
 import 'package:flutter_ces/pages/login_forms/loginPage.dart';
 import 'package:path_provider/path_provider.dart';
@@ -22,24 +23,28 @@ class _ProductosPageState extends State<ProductosPage> {
       imagen: 'assets/ps5_side.png',
       nombre: 'Game console',
       info: 'PlayStation 5 Digital Edition',
+      precio: 0,
     ),
     Producto(
       index: 2,
       imagen: 'assets/ps5.png',
       nombre: 'Game console',
       info: 'PlayStation 5',
+      precio: 0,
     ),
     Producto(
       index: 3,
       imagen: 'assets/control.png',
       nombre: 'Game console',
       info: 'DualSense Wireless Controller',
+      precio: 0,
     ),
     Producto(
       index: 4,
       imagen: 'assets/audifono.png',
       nombre: 'Game console',
       info: 'Wireless Headset',
+      precio: 0,
     ),
   ];
   List<Producto> _filteredProductos = [];
@@ -187,12 +192,16 @@ class Producto extends StatelessWidget {
   final String imagen;
   final String nombre;
   final String info;
+  final num precio;
+  int cantidad;
 
   Producto({
     required this.index,
     required this.imagen,
     required this.nombre,
     required this.info,
+    required this.precio,
+    this.cantidad = 1,
   });
 
   @override
@@ -277,7 +286,6 @@ class _BottomState extends State<Bottom> {
         ),
       ),
       child: Column(
-        //alignment: Alignment.center,
         children: [
           if (_showSearchBar)
             Padding(
@@ -338,7 +346,15 @@ class _BottomState extends State<Bottom> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    StackPagesRoute(
+                      previousPages: [CompraPage(imageIndex: 1)],
+                      enterPage: CarritoPage(),
+                    ),
+                  );
+                },
                 icon: Icon(
                   Icons.shopping_cart_outlined,
                   color: Styles.iconColor,
@@ -367,6 +383,9 @@ class _AccountPageState extends State<AccountPage> {
   final TextEditingController _NombreController = TextEditingController();
   final TextEditingController _ApellidoController = TextEditingController();
   final TextEditingController _TelefonoController = TextEditingController();
+  final TextEditingController _DireccionController = TextEditingController();
+  final TextEditingController _PaisController = TextEditingController();
+
   String? _currentUserEmail;
 
   @override
@@ -401,6 +420,10 @@ class _AccountPageState extends State<AccountPage> {
           if (currentUser.containsKey('perfil')) {
             _NombreController.text = currentUser['perfil']['nombre'] ?? '';
             _ApellidoController.text = currentUser['perfil']['apellido'] ?? '';
+            _DateNacController.text = currentUser['perfil']['fecNac'] ?? '';
+            _DireccionController.text =
+                currentUser['perfil']['direccion'] ?? '';
+            _PaisController.text = currentUser['perfil']['pais'] ?? '';
           }
         }
       }
@@ -426,6 +449,9 @@ class _AccountPageState extends State<AccountPage> {
           data[currentUserIndex]['perfil'] = {
             'nombre': _NombreController.text,
             'apellido': _ApellidoController.text,
+            'fecNac': _DateNacController.text,
+            'direccion': _DireccionController.text,
+            'pais': _PaisController.text,
           };
 
           await file.writeAsString(json.encode(data));
@@ -505,6 +531,30 @@ class _AccountPageState extends State<AccountPage> {
                     fillColor: const Color(0xff142047).withOpacity(0.1),
                     filled: true,
                     prefixIcon: const Icon(Icons.calendar_month)),
+              ),
+              SizedBox(height: 16.0),
+              TextField(
+                controller: _DireccionController,
+                decoration: InputDecoration(
+                    hintText: "Direccion",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none),
+                    fillColor: const Color(0xff142047).withOpacity(0.1),
+                    filled: true,
+                    prefixIcon: const Icon(Icons.house)),
+              ),
+              SizedBox(height: 16.0),
+              TextField(
+                controller: _PaisController,
+                decoration: InputDecoration(
+                    hintText: "Pais",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                        borderSide: BorderSide.none),
+                    fillColor: const Color(0xff142047).withOpacity(0.1),
+                    filled: true,
+                    prefixIcon: const Icon(Icons.location_pin)),
               ),
               SizedBox(height: 32.0),
               Center(

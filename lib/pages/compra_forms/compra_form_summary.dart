@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ces/pages/carrito_forms/carrito_provider.dart';
 import 'package:flutter_ces/pages/compra_forms/orderSuccess.dart';
 import '../helpers/demo_data.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +26,11 @@ class CompraFormSummary extends StatelessWidget {
       isHidden: isHidden,
       title: 'Resumen de Pedido',
       children: <Widget>[
-        _buildOrderSummary(),
+        _buildOrderSummary(context),
         Separator(),
-        _buildOrderInfo(),
+        _buildOrderInfo(context),
         Separator(),
-        _buildOrderTotal(),
+        _buildOrderTotal(context),
         _buildOrderSpecialInstructions(context),
         SubmitButton(
           padding: EdgeInsets.symmetric(horizontal: Styles.hzPadding),
@@ -50,7 +51,8 @@ class CompraFormSummary extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderSummary() {
+  Widget _buildOrderSummary(BuildContext context) {
+    final carrito = Provider.of<CarritoProvider>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -84,22 +86,23 @@ class CompraFormSummary extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Dual \nSense \nControl', style: Styles.productName),
-            Text('\$70.00', style: Styles.productPrice)
+            Text('Total', style: Styles.productName),
+            Text('\$${carrito.total}', style: Styles.productPrice)
           ],
         )
       ],
     );
   }
 
-  Widget _buildOrderInfo() {
+  Widget _buildOrderInfo(BuildContext context) {
+    final carrito = Provider.of<CarritoProvider>(context);
     return Column(
       children: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text('Subtotal', style: Styles.orderLabel),
-            Text('\$70.00', style: Styles.orderPrice),
+            Text('\$${carrito.total}', style: Styles.orderPrice),
           ],
         ),
         SizedBox(height: 12),
@@ -114,14 +117,15 @@ class CompraFormSummary extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderTotal() {
+  Widget _buildOrderTotal(BuildContext context) {
+    final carrito = Provider.of<CarritoProvider>(context);
     return Padding(
       padding: const EdgeInsets.only(bottom: 30.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text('Total', style: Styles.orderTotalLabel),
-          Text('\$70.00', style: Styles.orderTotal),
+          Text('\$${carrito.total}', style: Styles.orderTotal),
         ],
       ),
     );
