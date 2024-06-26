@@ -8,7 +8,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
-      splash: 'assets/ps5_logo_negro.png',
+      splash: 'assets/ces_logo_claro.png',
       nextScreen: ProductosPage(),
       splashTransition: SplashTransition.fadeTransition,
     );

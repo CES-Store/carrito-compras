@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ces/pages/helpers/demo_data.dart';
+import 'package:flutter_ces/pages/helpers/styles.dart';
 
-import '../pages/helpers/demo_data.dart';
 import 'input_validator.dart';
-import '../pages/helpers/styles.dart';
 
 class TextInput extends StatefulWidget {
   final String label;
@@ -75,7 +75,9 @@ class _TextInputState extends State<TextInput> {
       child: Stack(
         clipBehavior: Clip.none,
         children: <Widget>[
-          if (widget.label.isNotEmpty) Positioned(top: -24, child: Text(widget.label, style: Styles.inputLabel)),
+          if (widget.label.isNotEmpty)
+            Positioned(
+                top: -24, child: Text(widget.label, style: Styles.inputLabel)),
           TextFormField(
             initialValue: widget.initialValue,
             style: Styles.orderTotalLabel,
@@ -95,7 +97,8 @@ class _TextInputState extends State<TextInput> {
             Positioned(
               top: 8,
               right: 14,
-              child: Text(_errorText.toUpperCase(), style: Styles.labelNotValid),
+              child:
+                  Text(_errorText.toUpperCase(), style: Styles.labelNotValid),
             ),
         ],
       ),
@@ -104,8 +107,9 @@ class _TextInputState extends State<TextInput> {
 
   String _getLabel() {
     String label = '';
-    if (!widget.isRequired && _value.isEmpty) label = 'Opcional';
-    if (_value.isNotEmpty && widget.label.isEmpty || widget.initialValue.isNotEmpty) return widget.helper;
+    if (!widget.isRequired && _value.isEmpty) label = 'Optional';
+    if (_value.isNotEmpty && widget.label.isEmpty ||
+        widget.initialValue.isNotEmpty) return widget.helper;
     return label;
   }
 
@@ -159,7 +163,8 @@ class _TextInputState extends State<TextInput> {
       return null;
     }
     // validate when the input has a value
-    else if (_value.isNotEmpty && InputValidator.validate(widget.type, _value)) {
+    else if (_value.isNotEmpty &&
+        InputValidator.validate(widget.type, _value)) {
       isValid = true;
       _errorText = '';
       return null;

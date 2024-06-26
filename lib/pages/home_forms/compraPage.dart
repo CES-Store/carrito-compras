@@ -57,7 +57,7 @@ class Page1 extends StatelessWidget {
         toolbarHeight: 100,
         centerTitle: true,
         title: Image.asset(
-          'assets/ps5_logo.png',
+          'assets/ces_logo.png',
           width: width / Styles.appBarTitleWidthFraction,
         ),
         backgroundColor: Styles.pageAppBarBackgroundColor,
@@ -112,7 +112,7 @@ class Page2 extends StatelessWidget {
         toolbarHeight: 100,
         centerTitle: true,
         title: Image.asset(
-          'assets/ps5_logo.png',
+          'assets/ces_logo.png',
           width: width / Styles.appBarTitleWidthFraction,
         ),
         backgroundColor: Styles.pageAppBarBackgroundColor,
@@ -167,7 +167,7 @@ class Page3 extends StatelessWidget {
         toolbarHeight: 100,
         centerTitle: true,
         title: Image.asset(
-          'assets/ps5_logo.png',
+          'assets/ces_logo.png',
           width: width / Styles.appBarTitleWidthFraction,
         ),
         backgroundColor: Styles.pageAppBarBackgroundColor,
@@ -223,7 +223,7 @@ class Page4 extends StatelessWidget {
         toolbarHeight: 100,
         centerTitle: true,
         title: Image.asset(
-          'assets/ps5_logo.png',
+          'assets/ces_logo.png',
           width: width / Styles.appBarTitleWidthFraction,
         ),
         backgroundColor: Styles.pageAppBarBackgroundColor,

@@ -19,12 +19,14 @@ class CompraFormPayment extends StatefulWidget {
   final double? pageSize;
 
   const CompraFormPayment({Key? key, this.pageSize}) : super(key: key);
+
   @override
   _CompraFormPaymentState createState() => _CompraFormPaymentState();
 }
 
 class _CompraFormPaymentState extends State<CompraFormPayment> with FormMixin {
   final _formKey = GlobalKey<FormState>();
+  String _errorText = '';
   CreditCardNetwork? _cardNetwork;
 
   late SharedFormState sharedState;
@@ -38,7 +40,6 @@ class _CompraFormPaymentState extends State<CompraFormPayment> with FormMixin {
 
   @override
   Widget build(BuildContext context) {
-    print("Rebuilding payments @ ${DateTime.now().millisecondsSinceEpoch}");
     return FormPage(
       formKey: _formKey,
       pageSizeProportion: widget.pageSize ?? 0.85,
@@ -61,7 +62,11 @@ class _CompraFormPaymentState extends State<CompraFormPayment> with FormMixin {
           inputType: CreditCardInputType.number,
         ),
         TextInput(
-            key: ValueKey(FormKeys.ccName), label: 'Nombre de tarjeta', helper: 'Nombre', onValidate: onItemValidate,),
+          key: ValueKey(FormKeys.ccName),
+          label: 'Nombre de Tarjeta',
+          helper: 'Nombre',
+          onValidate: onItemValidate,
+        ),
         Row(
           children: <Widget>[
             Expanded(
@@ -71,8 +76,7 @@ class _CompraFormPaymentState extends State<CompraFormPayment> with FormMixin {
               helper: 'MM/YY',
               onValidate: onItemValidate,
               inputType: CreditCardInputType.expirationDate,
-            )
-            ),
+            )),
             SizedBox(width: 24),
             Expanded(
               child: CreditCardInfoInput(
@@ -81,8 +85,7 @@ class _CompraFormPaymentState extends State<CompraFormPayment> with FormMixin {
                   label: 'Codigo de Seguridad',
                   helper: '000',
                   onValidate: onItemValidate,
-                  inputType: CreditCardInputType.securityCode
-                  ),
+                  inputType: CreditCardInputType.securityCode),
             ),
           ],
         ),
@@ -116,8 +119,11 @@ class _CompraFormPaymentState extends State<CompraFormPayment> with FormMixin {
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(constraints: BoxConstraints(minWidth: 85), child: Text('Contacto', style: Styles.orderLabel)),
-          Text(values[FormKeys.email] ?? '', overflow: TextOverflow.clip, style: Styles.orderPrice),
+          Container(
+              constraints: BoxConstraints(minWidth: 85),
+              child: Text('Contacto', style: Styles.orderLabel)),
+          Text(values[FormKeys.email] ?? '',
+              overflow: TextOverflow.clip, style: Styles.orderPrice),
         ],
       ),
       Padding(
@@ -125,15 +131,20 @@ class _CompraFormPaymentState extends State<CompraFormPayment> with FormMixin {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(constraints: BoxConstraints(minWidth: 85), child: Text('Enviar a', style: Styles.orderLabel)),
-            Text(_getShippingAddress(), overflow: TextOverflow.clip, style: Styles.orderPrice),
+            Container(
+                constraints: BoxConstraints(minWidth: 85),
+                child: Text('Enviar a', style: Styles.orderLabel)),
+            Text(_getShippingAddress(),
+                overflow: TextOverflow.clip, style: Styles.orderPrice),
           ],
         ),
       ),
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(constraints: BoxConstraints(minWidth: 85), child: Text('Metodo', style: Styles.orderLabel)),
+          Container(
+              constraints: BoxConstraints(minWidth: 85),
+              child: Text('Metodo', style: Styles.orderLabel)),
           Text('GRATIS', overflow: TextOverflow.clip, style: Styles.orderPrice),
         ],
       )
@@ -141,11 +152,14 @@ class _CompraFormPaymentState extends State<CompraFormPayment> with FormMixin {
   }
 
   String _getShippingAddress() {
-    String? aptNumber = values[FormKeys.apt]?.isNotEmpty == true ? '#${values[FormKeys.apt]} ' : '';
+    String? aptNumber = values[FormKeys.apt]?.isNotEmpty == true
+        ? '#${values[FormKeys.apt]} '
+        : '';
     String? address = values[FormKeys.address];
     String? country = values[FormKeys.country];
     String? city = values[FormKeys.city];
-    String? countrySubdivision = values[CountryData.getSubdivisionTitle(country)] ?? '';
+    String? countrySubdivision =
+        values[CountryData.getSubdivisionTitle(country)] ?? '';
     String? postalCode = values[FormKeys.postal];
     return '$aptNumber$address\n$city, $countrySubdivision ${postalCode?.toUpperCase()}\n${country?.toUpperCase()}';
   }
@@ -201,13 +215,13 @@ class _CompraFormPaymentState extends State<CompraFormPayment> with FormMixin {
 
   void _handleSubmit() {
     if (_formKey.currentState?.validate() == true && formCompletion == 1) {
-       Navigator.push(
-      context,
-      StackPagesRoute(
-        previousPages: [CompraFormPayment(pageSize: .85)],
-        enterPage: OrderSuccessPage(),
-      ),
-    );
+      Navigator.push(
+        context,
+        StackPagesRoute(
+          previousPages: [CompraFormPayment(pageSize: .85)],
+          enterPage: OrderSuccessPage(),
+        ),
+      );
     } else {
       setState(() => isFormErrorVisible = true);
     }

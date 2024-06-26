@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ces/pages/carrito_forms/carrito_provider.dart';
+import 'package:flutter_ces/pages/compra_forms/compra_form_payment.dart';
 import 'package:flutter_ces/pages/compra_forms/orderSuccess.dart';
 import '../helpers/demo_data.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +47,7 @@ class CompraFormSummary extends StatelessWidget {
       context,
       StackPagesRoute(
         previousPages: [CompraFormSummary(pageSize: .85, isHidden: true)],
-        enterPage: OrderSuccessPage(),
+        enterPage: CompraFormInformation(),
       ),
     );
   }
