@@ -18,7 +18,7 @@ class CompraFormSummary extends StatelessWidget {
   final bool isHidden;
 
   const CompraFormSummary({Key? key, this.pageSize, this.isHidden = false})
-      : super(key: key);
+      : super(key: key); 
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class CompraFormSummary extends StatelessWidget {
       context,
       StackPagesRoute(
         previousPages: [CompraFormSummary(pageSize: .85, isHidden: true)],
-        enterPage: CompraFormInformation(),
+        enterPage: OrderSuccessPage(),
       ),
     );
   }

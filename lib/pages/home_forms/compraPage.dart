@@ -153,7 +153,7 @@ class Page3 extends StatelessWidget {
       index: 3,
       nombre: 'Game console',
       precio: 70,
-      info: 'DualSense Wireless Controller',
+      info: 'Wireless Controller',
       imagen: 'assets/control.png',
     );
 

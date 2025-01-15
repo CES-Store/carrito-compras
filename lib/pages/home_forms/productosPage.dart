@@ -36,7 +36,7 @@ class _ProductosPageState extends State<ProductosPage> {
       index: 3,
       imagen: 'assets/control.png',
       nombre: 'Game console',
-      info: 'DualSense Wireless Controller',
+      info: 'Dual Sense Wireless Controller',
       precio: 0,
     ),
     Producto(
@@ -217,28 +217,30 @@ class Producto extends StatelessWidget {
         decoration: Styles.productoDecoration,
         child: Padding(
           padding: EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                width: width * 0.24,
-                height: height * 0.24,
-                child: Hero(
-                  tag: 'control',
-                  child: Image.asset(
-                    this.imagen,
-                    fit: BoxFit.contain,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: width * 0.24,
+                  height: height * 0.24,
+                  child: Hero(
+                    tag: 'control',
+                    child: Image.asset(
+                      this.imagen,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(this.nombre, style: Styles.nombreTextStyle),
-                  Text(this.info, style: Styles.infoTextStyle),
-                ],
-              ),
-            ],
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(this.nombre, style: Styles.nombreTextStyle),
+                    Text(this.info, style: Styles.infoTextStyle),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
