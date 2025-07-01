@@ -9,7 +9,9 @@ import 'package:patrol/src/native/contracts/contracts.dart';
 import 'package:test_api/src/backend/invoker.dart';
 
 // START: GENERATED TEST IMPORTS
+import 'csvExample_test.dart' as csvExample_test;
 import 'example_test.dart' as example_test;
+import 'pruebaLeo_test.dart' as pruebaLeo_test;
 // END: GENERATED TEST IMPORTS
 
 Future<void> main() async {
@@ -59,14 +61,19 @@ Future<void> main() async {
     // Maybe somewhat counterintuitively, this callback runs *after* the calls
     // to group() below.
     final topLevelGroup = Invoker.current!.liveTest.groups.first;
-    final dartTestGroup = createDartTestGroup(topLevelGroup);
+    final dartTestGroup = createDartTestGroup(topLevelGroup,
+      tags: null,
+      excludeTags: null,
+    );
     testExplorationCompleter.complete(dartTestGroup);
     print('patrol_test_explorer: obtained Dart-side test hierarchy:');
-    printGroupStructure(dartTestGroup);
+    reportGroupStructure(dartTestGroup);
   });
 
   // START: GENERATED TEST GROUPS
+  group('csvExample_test', csvExample_test.main);
   group('example_test', example_test.main);
+  group('pruebaLeo_test', pruebaLeo_test.main);
   // END: GENERATED TEST GROUPS
 
   final dartTestGroup = await testExplorationCompleter.future;

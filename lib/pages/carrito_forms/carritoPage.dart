@@ -14,19 +14,22 @@ class CarritoPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Carrito de Compras',
-          style: TextStyle(
-            color: Colors.blue,
-            fontWeight: FontWeight.bold,
-            shadows: [
-              Shadow(
-                offset: Offset(2.0, 2.0),
-                blurRadius: 3.0,
-                color: Colors.grey,
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.shopping_cart,
+              color: Color(0xFF011B55),
+            ),
+            SizedBox(width: 8),
+            Text(
+              'Carrito de Compras',
+              style: TextStyle(
+                color: Color(0xFF011B55),
+                fontWeight: FontWeight.bold,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       body: Column(
@@ -127,7 +130,7 @@ class CarritoPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    color: Color(0xFF011B55),
                   ),
                 ),
                 ElevatedButton(
@@ -136,8 +139,10 @@ class CarritoPage extends StatelessWidget {
                   child: Text('Finalizar Compra'),
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                    backgroundColor:
+                        isCarritoVacio ? Colors.grey : Color(0xFF011B55),
+                    foregroundColor: Colors.white,
                     textStyle: TextStyle(fontSize: 18),
-                    primary: isCarritoVacio ? Colors.grey : Colors.blue,
                   ),
                 ),
               ],

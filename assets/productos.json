@@ -1,0 +1,215 @@
+[
+    {
+      "index": 1,
+      "imagen": "assets/laptop.png",
+      "nombre": "Laptop",
+      "info": "Ultrabook Intel Core i7, 16GB RAM, 512GB SSD",
+      "precio": 1200
+    },
+    {
+      "index": 2,
+      "imagen": "assets/mouse.png",
+      "nombre": "Mouse Gamer",
+      "info": "Mouse óptico RGB 16000 DPI",
+      "precio": 50
+    },
+    {
+      "index": 3,
+      "imagen": "assets/control.png",
+      "nombre": "Game Console",
+      "info": "Dual Sense Wireless Controller",
+      "precio": 0
+    },
+    {
+      "index": 4,
+      "imagen": "assets/keyboard.png",
+      "nombre": "Teclado Mecánico",
+      "info": "Teclado retroiluminado switch blue",
+      "precio": 80
+    },
+    {
+      "index": 5,
+      "imagen": "assets/monitor.png",
+      "nombre": "Monitor 27\"",
+      "info": "Monitor IPS 2K 144Hz",
+      "precio": 300
+    },
+    {
+      "index": 6,
+      "imagen": "assets/speaker.png",
+      "nombre": "Parlantes Bluetooth",
+      "info": "Parlantes inalámbricos con subwoofer",
+      "precio": 90
+    },
+    {
+      "index": 7,
+      "imagen": "assets/headset.png",
+      "nombre": "Auriculares Gamer",
+      "info": "Headset 7.1 Surround con micrófono",
+      "precio": 120
+    },
+    {
+      "index": 8,
+      "imagen": "assets/webcam.png",
+      "nombre": "Webcam HD",
+      "info": "Cámara Full HD 1080p con micrófono integrado",
+      "precio": 70
+    },
+    {
+      "index": 9,
+      "imagen": "assets/ssd.png",
+      "nombre": "SSD 1TB",
+      "info": "Unidad de estado sólido NVMe PCIe Gen4",
+      "precio": 150
+    },
+    {
+      "index": 10,
+      "imagen": "assets/hdd.png",
+      "nombre": "Disco Duro Externo",
+      "info": "HDD 2TB USB 3.0",
+      "precio": 80
+    },
+    {
+      "index": 11,
+      "imagen": "assets/console.png",
+      "nombre": "PlayStation 5",
+      "info": "Consola de videojuegos PS5 Digital Edition",
+      "precio": 499
+    },
+    {
+      "index": 12,
+      "imagen": "assets/xbox.png",
+      "nombre": "Xbox Series X",
+      "info": "Consola de videojuegos de última generación",
+      "precio": 499
+    },
+    {
+      "index": 13,
+      "imagen": "assets/nintendo.png",
+      "nombre": "Nintendo Switch",
+      "info": "Consola híbrida portátil y de sobremesa",
+      "precio": 299
+    },
+    {
+      "index": 14,
+      "imagen": "assets/router.png",
+      "nombre": "Router WiFi 6",
+      "info": "Router inalámbrico AX3000",
+      "precio": 130
+    },
+    {
+      "index": 15,
+      "imagen": "assets/printer.png",
+      "nombre": "Impresora Multifunción",
+      "info": "Impresora láser a color con WiFi",
+      "precio": 250
+    },
+    {
+      "index": 16,
+      "imagen": "assets/vr.png",
+      "nombre": "Gafas VR",
+      "info": "Gafas de realidad virtual Oculus Quest 2",
+      "precio": 399
+    },
+    {
+      "index": 17,
+      "imagen": "assets/tablet.png",
+      "nombre": "Tablet",
+      "info": "Tablet Android 10'' 128GB",
+      "precio": 220
+    },
+    {
+      "index": 18,
+      "imagen": "assets/smartwatch.png",
+      "nombre": "Smartwatch",
+      "info": "Reloj inteligente con sensor de oxígeno",
+      "precio": 180
+    },
+    {
+      "index": 19,
+      "imagen": "assets/smartphone.png",
+      "nombre": "Smartphone",
+      "info": "Teléfono móvil 5G 256GB",
+      "precio": 999
+    },
+    {
+      "index": 20,
+      "imagen": "assets/microphone.png",
+      "nombre": "Micrófono USB",
+      "info": "Micrófono condensador para streaming",
+      "precio": 110
+    },
+    {
+      "index": 21,
+      "imagen": "assets/camera.png",
+      "nombre": "Cámara DSLR",
+      "info": "Cámara fotográfica profesional 24MP",
+      "precio": 650
+    },
+    {
+      "index": 22,
+      "imagen": "assets/projector.png",
+      "nombre": "Proyector",
+      "info": "Proyector 4K con entrada HDMI",
+      "precio": 350
+    },
+    {
+      "index": 23,
+      "imagen": "assets/docking.png",
+      "nombre": "Docking Station",
+      "info": "Base USB-C para laptops con 6 puertos",
+      "precio": 90
+    },
+    {
+      "index": 24,
+      "imagen": "assets/gpu.png",
+      "nombre": "Tarjeta Gráfica",
+      "info": "NVIDIA GeForce RTX 4070 12GB",
+      "precio": 699
+    },
+    {
+      "index": 25,
+      "imagen": "assets/cpu.png",
+      "nombre": "Procesador",
+      "info": "AMD Ryzen 9 7900X",
+      "precio": 550
+    },
+    {
+      "index": 26,
+      "imagen": "assets/ram.png",
+      "nombre": "Memoria RAM",
+      "info": "DDR5 32GB 6000MHz",
+      "precio": 180
+    },
+    {
+      "index": 27,
+      "imagen": "assets/powerbank.png",
+      "nombre": "Power Bank",
+      "info": "Batería portátil 20000mAh",
+      "precio": 60
+    },
+    {
+      "index": 28,
+      "imagen": "assets/coolingpad.png",
+      "nombre": "Cooler para Laptop",
+      "info": "Base refrigerante con ventiladores RGB",
+      "precio": 40
+    },
+    {
+      "index": 29,
+      "imagen": "assets/hdmi.png",
+      "nombre": "Cable HDMI",
+      "info": "Cable HDMI 4K 60Hz 2 metros",
+      "precio": 15
+    },
+    {
+      "index": 30,
+      "imagen": "assets/ups.png",
+      "nombre": "UPS",
+      "info": "Sistema de alimentación ininterrumpida 1200VA",
+      "precio": 200
+    }
+  ]
+  
+  
+  

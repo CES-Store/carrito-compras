@@ -46,7 +46,6 @@ class Comprar extends StatelessWidget {
             onPressed: () {
               Provider.of<CarritoProvider>(context, listen: false)
                   .agregarProducto(producto);
-              opcionCompra(context);
             },
             icon: Icon(Icons.attach_money),
             label: Text('Comprar ahora'),

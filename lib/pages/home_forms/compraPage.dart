@@ -10,42 +10,24 @@ import 'package:provider/provider.dart';
 import '../../styles/styles_home.dart';
 
 class CompraPage extends StatelessWidget {
-  final int imageIndex;
+  final Producto producto;
 
-  const CompraPage({required this.imageIndex});
+  const CompraPage({required this.producto});
 
   @override
   Widget build(BuildContext context) {
-    switch (imageIndex) {
-      case 1:
-        return Page1();
-        break;
-      case 2:
-        return Page2();
-        break;
-      case 3:
-        return Page3();
-        break;
-      case 4:
-        return Page4();
-      default:
-        return Container();
-    }
+    return _ProductPageTemplate(producto: producto);
   }
 }
 
-class Page1 extends StatelessWidget {
-  const Page1({super.key});
+class _ProductPageTemplate extends StatelessWidget {
+  final Producto producto;
+
+  const _ProductPageTemplate({required this.producto});
+
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    final producto = Producto(
-      index: 1,
-      nombre: 'PS5 Side',
-      precio: 499.99,
-      info: 'PlayStation 5 Digital Edition',
-      imagen: 'assets/ps5_side.png',
-    );
 
     return Scaffold(
       appBar: AppBar(
@@ -67,9 +49,7 @@ class Page1 extends StatelessWidget {
             icon: Icon(Icons.settings_outlined),
             color: Styles.appBarIconColor,
           ),
-          SizedBox(
-            width: 10,
-          )
+          SizedBox(width: 10)
         ],
         elevation: 0,
       ),
@@ -83,183 +63,16 @@ class Page1 extends StatelessWidget {
           ),
           color: Styles.bodyBackgroundColor,
         ),
-        child: Contenido(imagen: 'assets/ps5_side.png', producto: producto),
+        child: _ProductContent(producto: producto),
       ),
     );
   }
 }
 
-class Page2 extends StatelessWidget {
-  const Page2({super.key});
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-    final producto = Producto(
-      index: 2,
-      nombre: 'PS5',
-      precio: 300,
-      info: 'PlayStation 5 Digital Edition',
-      imagen: 'assets/ps5.png',
-    );
-
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => _handleBack(context),
-          icon: Icon(Icons.arrow_back_ios),
-          color: Styles.appBarIconColor,
-        ),
-        toolbarHeight: 100,
-        centerTitle: true,
-        title: Image.asset(
-          'assets/ces_logo.png',
-          width: width / Styles.appBarTitleWidthFraction,
-        ),
-        backgroundColor: Styles.pageAppBarBackgroundColor,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.settings_outlined),
-            color: Styles.appBarIconColor,
-          ),
-          SizedBox(
-            width: 10,
-          )
-        ],
-        elevation: 0,
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(40),
-            topRight: Radius.circular(40),
-          ),
-          color: Styles.bodyBackgroundColor,
-        ),
-        child: Contenido(imagen: 'assets/ps5.png', producto: producto),
-      ),
-    );
-  }
-}
-
-class Page3 extends StatelessWidget {
-  const Page3({super.key});
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-    final producto = Producto(
-      index: 3,
-      nombre: 'Game console',
-      precio: 70,
-      info: 'Wireless Controller',
-      imagen: 'assets/control.png',
-    );
-
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => _handleBack(context),
-          icon: Icon(Icons.arrow_back_ios),
-          color: Styles.appBarIconColor,
-        ),
-        toolbarHeight: 100,
-        centerTitle: true,
-        title: Image.asset(
-          'assets/ces_logo.png',
-          width: width / Styles.appBarTitleWidthFraction,
-        ),
-        backgroundColor: Styles.pageAppBarBackgroundColor,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.settings_outlined),
-            color: Styles.appBarIconColor,
-          ),
-          SizedBox(
-            width: 10,
-          )
-        ],
-        elevation: 0,
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(40),
-            topRight: Radius.circular(40),
-          ),
-          color: Styles.bodyBackgroundColor,
-        ),
-        child:
-            Contenido(imagen: 'assets/control_compra.png', producto: producto),
-      ),
-    );
-  }
-}
-
-class Page4 extends StatelessWidget {
-  const Page4({super.key});
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-    final producto = Producto(
-      index: 4,
-      nombre: 'Game console',
-      precio: 150,
-      info: 'Wireless Headset',
-      imagen: 'assets/audifono.png',
-    );
-
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => _handleBack(context),
-          icon: Icon(Icons.arrow_back_ios),
-          color: Styles.appBarIconColor,
-        ),
-        toolbarHeight: 100,
-        centerTitle: true,
-        title: Image.asset(
-          'assets/ces_logo.png',
-          width: width / Styles.appBarTitleWidthFraction,
-        ),
-        backgroundColor: Styles.pageAppBarBackgroundColor,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.settings_outlined),
-            color: Styles.appBarIconColor,
-          ),
-          SizedBox(
-            width: 10,
-          )
-        ],
-        elevation: 0,
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(40),
-            topRight: Radius.circular(40),
-          ),
-          color: Styles.bodyBackgroundColor,
-        ),
-        child: Contenido(imagen: 'assets/audifono.png', producto: producto),
-      ),
-    );
-  }
-}
-
-class Contenido extends StatelessWidget {
-  final String imagen;
+class _ProductContent extends StatelessWidget {
   final Producto producto;
 
-  const Contenido({super.key, required this.imagen, required this.producto});
+  const _ProductContent({required this.producto});
 
   @override
   Widget build(BuildContext context) {
@@ -271,22 +84,25 @@ class Contenido extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          // Imagen del producto
           Container(
             width: width * 0.70,
             height: height * 0.30,
-            child: Image.asset(imagen),
+            child: Image.asset(producto.imagen),
           ),
-          Botones(),
-          Comprar(producto: producto),
+
+          // Características del producto (puedes hacer esto dinámico también)
+          _ProductFeatures(),
+
+          // Botones de compra
+          _PurchaseButtons(producto: producto),
         ],
       ),
     );
   }
 }
 
-class Botones extends StatelessWidget {
-  const Botones({super.key});
-
+class _ProductFeatures extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -295,23 +111,19 @@ class Botones extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       child: Row(
         children: [
-          Boton(
-            icono: 'assets/microfono.svg',
-            texto: 'Built-In Microphone',
+          _FeatureButton(
+            icon: 'assets/microfono.svg',
+            text: 'Built-In Microphone',
           ),
-          SizedBox(
-            width: Styles.buttonSpacing,
+          SizedBox(width: Styles.buttonSpacing),
+          _FeatureButton(
+            icon: 'assets/audifono.svg',
+            text: 'Headset Jack',
           ),
-          Boton(
-            icono: 'assets/audifono.svg',
-            texto: 'Headset Jack',
-          ),
-          SizedBox(
-            width: Styles.buttonSpacing,
-          ),
-          Boton(
-            icono: 'assets/sensor.svg',
-            texto: 'Motion Sensor',
+          SizedBox(width: Styles.buttonSpacing),
+          _FeatureButton(
+            icon: 'assets/sensor.svg',
+            text: 'Motion Sensor',
           ),
         ],
       ),
@@ -319,10 +131,58 @@ class Botones extends StatelessWidget {
   }
 }
 
-class Comprar extends StatelessWidget {
+class _FeatureButton extends StatelessWidget {
+  final String icon;
+  final String text;
+
+  const _FeatureButton({
+    required this.icon,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: Styles.width,
+      height: Styles.height,
+      decoration: BoxDecoration(
+        color: Styles.backgroundColorBoton,
+        borderRadius: BorderRadius.circular(Styles.borderRadiusBoton),
+        boxShadow: [
+          BoxShadow(
+            color: Styles.shadowColor,
+            offset: Offset(Styles.shadowOffsetX, Styles.shadowOffsetY),
+            spreadRadius: Styles.shadowSpreadRadius,
+            blurRadius: Styles.shadowBlurRadius,
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SvgPicture.asset(this.icon),
+            Text(
+              this.text,
+              style: TextStyle(
+                color: Styles.textColorBoton,
+                fontWeight: Styles.textFontWeightBoton,
+                fontSize: Styles.textSizeBoton,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PurchaseButtons extends StatelessWidget {
   final Producto producto;
 
-  const Comprar({super.key, required this.producto});
+  const _PurchaseButtons({required this.producto});
 
   @override
   Widget build(BuildContext context) {
@@ -355,9 +215,7 @@ class Comprar extends StatelessWidget {
             ),
           ),
           ElevatedButton.icon(
-            onPressed: () {
-              opcionCompra(context);
-            },
+            onPressed: () => _showPurchaseOptions(context, producto),
             icon: Icon(Icons.attach_money, color: Colors.white),
             label: Text(''),
             style: ElevatedButton.styleFrom(
@@ -371,58 +229,13 @@ class Comprar extends StatelessWidget {
   }
 }
 
-class Boton extends StatelessWidget {
-  final String icono;
-  final String texto;
-
-  const Boton({
-    required this.icono,
-    required this.texto,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: Styles.width,
-      height: Styles.height,
-      decoration: BoxDecoration(
-        color: Styles.backgroundColorBoton,
-        borderRadius: BorderRadius.circular(Styles.borderRadiusBoton),
-        boxShadow: [
-          BoxShadow(
-            color: Styles.shadowColor,
-            offset: Offset(Styles.shadowOffsetX, Styles.shadowOffsetY),
-            spreadRadius: Styles.shadowSpreadRadius,
-            blurRadius: Styles.shadowBlurRadius,
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SvgPicture.asset(
-              this.icono,
-            ),
-            Text(
-              this.texto,
-              style: TextStyle(
-                color: Styles.textColorBoton,
-                fontWeight: Styles.textFontWeightBoton,
-                fontSize: Styles.textSizeBoton,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+// Funciones de utilidad
+void _handleBack(BuildContext context) {
+  Navigator.of(context).pop();
 }
 
-PersistentBottomSheetController<dynamic> opcionCompra(BuildContext context) {
-  return showBottomSheet(
+void _showPurchaseOptions(BuildContext context, Producto producto) {
+  showBottomSheet(
     context: context,
     builder: (context) {
       return Wrap(
@@ -431,21 +244,19 @@ PersistentBottomSheetController<dynamic> opcionCompra(BuildContext context) {
             title: Text('Google Play'),
             leading: FaIcon(FontAwesomeIcons.googlePay),
             trailing: FaIcon(FontAwesomeIcons.moneyBill),
-            onTap: () => _handleSubmit(context),
+            onTap: () => _navigateToSummary(context, [producto]),
           ),
           ListTile(
             title: Text('Apple Play'),
             leading: FaIcon(FontAwesomeIcons.applePay),
             trailing: FaIcon(FontAwesomeIcons.moneyBill),
-            onTap: () => _handleSubmit(context),
+            onTap: () => _navigateToSummary(context, [producto]),
           ),
           ListTile(
             title: Text('Paypal'),
             leading: FaIcon(FontAwesomeIcons.paypal),
-            trailing: FaIcon(
-              FontAwesomeIcons.moneyBill,
-            ),
-            onTap: () => _handleSubmit(context),
+            trailing: FaIcon(FontAwesomeIcons.moneyBill),
+            onTap: () => _navigateToSummary(context, [producto]),
           ),
         ],
       );
@@ -453,16 +264,12 @@ PersistentBottomSheetController<dynamic> opcionCompra(BuildContext context) {
   );
 }
 
-void _handleSubmit(BuildContext context) {
+void _navigateToSummary(BuildContext context, List<Producto> productos) {
   Navigator.push(
     context,
     StackPagesRoute(
-      previousPages: [CompraPage(imageIndex: 1)],
+      previousPages: [CompraPage(producto: productos.first)],
       enterPage: CompraFormSummary(),
     ),
   );
-}
-
-void _handleBack(BuildContext context) {
-  Navigator.of(context).pop();
 }

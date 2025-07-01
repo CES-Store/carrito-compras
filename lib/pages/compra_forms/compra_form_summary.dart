@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ces/pages/carrito_forms/carrito_provider.dart';
 import 'package:flutter_ces/pages/compra_forms/compra_form_payment.dart';
 import 'package:flutter_ces/pages/compra_forms/orderSuccess.dart';
+import 'package:flutter_ces/pages/home_forms/productosPage.dart';
 import '../helpers/demo_data.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,7 @@ class CompraFormSummary extends StatelessWidget {
   final bool isHidden;
 
   const CompraFormSummary({Key? key, this.pageSize, this.isHidden = false})
-      : super(key: key); 
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,7 @@ class CompraFormSummary extends StatelessWidget {
       context,
       StackPagesRoute(
         previousPages: [CompraFormSummary(pageSize: .85, isHidden: true)],
-        enterPage: OrderSuccessPage(),
+        enterPage: CompraFormInformation(),
       ),
     );
   }

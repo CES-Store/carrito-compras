@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_ces/pages/carrito_forms/carritoPage.dart';
 import 'package:flutter_ces/pages/home_forms/compraPage.dart';
 import 'package:flutter_ces/pages/login_forms/loginPage.dart';
@@ -17,52 +18,44 @@ class ProductosPage extends StatefulWidget {
 
 class _ProductosPageState extends State<ProductosPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<Producto> _productos = [
-    Producto(
-      index: 1,
-      imagen: 'assets/ps5_side.png',
-      nombre: 'Game console',
-      info: 'PlayStation 5 Digital Edition',
-      precio: 0,
-    ),
-    Producto(
-      index: 2,
-      imagen: 'assets/ps5.png',
-      nombre: 'Game console',
-      info: 'PlayStation 5',
-      precio: 0,
-    ),
-    Producto(
-      index: 3,
-      imagen: 'assets/control.png',
-      nombre: 'Game console',
-      info: 'Dual Sense Wireless Controller',
-      precio: 0,
-    ),
-    Producto(
-      index: 4,
-      imagen: 'assets/audifono.png',
-      nombre: 'Game console',
-      info: 'Wireless Headset',
-      precio: 0,
-    ),
-  ];
+  List<Producto> _productos = [];
   List<Producto> _filteredProductos = [];
   bool _showAccountPage = false;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _filteredProductos = _productos;
+    _loadProductos();
+  }
+
+  Future<void> _loadProductos() async {
+    try {
+      final String data = await rootBundle.loadString('assets/productos.json');
+      final jsonList = json.decode(data) as List<dynamic>;
+
+      setState(() {
+        _productos = jsonList.map((json) => Producto.fromJson(json)).toList();
+        _filteredProductos = _productos;
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error cargando productos: $e');
+      setState(() => _isLoading = false);
+    }
   }
 
   void _filterProductos(String query) {
     setState(() {
-      _filteredProductos = _productos.where((producto) {
-        final productoLower = producto.info.toLowerCase();
-        final queryLower = query.toLowerCase();
-        return productoLower.contains(queryLower);
-      }).toList();
+      if (query.isEmpty) {
+        _filteredProductos = _productos;
+      } else {
+        _filteredProductos = _productos.where((producto) {
+          final productoLower = producto.info.toLowerCase();
+          final queryLower = query.toLowerCase();
+          return productoLower.contains(queryLower);
+        }).toList();
+      }
     });
   }
 
@@ -79,9 +72,7 @@ class _ProductosPageState extends State<ProductosPage> {
       key: _scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {
-            _scaffoldKey.currentState!.openDrawer();
-          },
+          onPressed: () => _scaffoldKey.currentState?.openDrawer(),
           icon: Icon(Icons.menu),
           color: Styles.appBarLeadingIconColor,
         ),
@@ -95,9 +86,7 @@ class _ProductosPageState extends State<ProductosPage> {
             icon: Icon(Icons.settings_outlined),
             color: Styles.appBarActionsColor,
           ),
-          SizedBox(
-            width: 10,
-          ),
+          SizedBox(width: 10),
         ],
         elevation: Styles.appBarElevation,
       ),
@@ -105,10 +94,17 @@ class _ProductosPageState extends State<ProductosPage> {
         children: [
           Visibility(
             visible: !_showAccountPage,
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: ProductosList(productos: _filteredProductos),
-            ),
+            child: _isLoading
+                ? Center(child: CircularProgressIndicator())
+                : _filteredProductos.isEmpty
+                    ? Center(child: Text('No se encontraron productos'))
+                    : SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: ProductosList(
+                          productos: _filteredProductos,
+                          onProductoTap: _navigateToCompraPage,
+                        ),
+                      ),
           ),
           Visibility(
             visible: _showAccountPage,
@@ -116,36 +112,41 @@ class _ProductosPageState extends State<ProductosPage> {
           ),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-            ListTile(
-              title: Text('Logout'),
-              onTap: () {
-                _logout(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: _buildDrawer(context),
       bottomNavigationBar: Bottom(
-        onSearchChanged: (query) {
-          _filterProductos(query);
-        },
+        onSearchChanged: _filterProductos,
         onAccountPressed: _toggleAccountPage,
+      ),
+    );
+  }
+
+  Widget _buildDrawer(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(color: Colors.blue),
+            child: Text(
+              'Menu',
+              style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
+          ),
+          ListTile(
+            title: Text('Logout'),
+            onTap: () => _logout(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _navigateToCompraPage(Producto producto) {
+    Navigator.push(
+      context,
+      StackPagesRoute(
+        previousPages: [ProductosPage()],
+        enterPage: CompraPage(producto: producto),
       ),
     );
   }
@@ -163,8 +164,13 @@ class _ProductosPageState extends State<ProductosPage> {
 
 class ProductosList extends StatelessWidget {
   final List<Producto> productos;
+  final Function(Producto) onProductoTap;
 
-  const ProductosList({Key? key, required this.productos}) : super(key: key);
+  const ProductosList({
+    Key? key,
+    required this.productos,
+    required this.onProductoTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -177,43 +183,23 @@ class ProductosList extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                if (i < productos.length) productos[i],
-                if (i + 1 < productos.length) productos[i + 1],
+                if (i < productos.length)
+                  _buildProductoItem(context, productos[i]),
+                if (i + 1 < productos.length)
+                  _buildProductoItem(context, productos[i + 1]),
               ],
             ),
         ],
       ),
     );
   }
-}
 
-class Producto extends StatelessWidget {
-  final int index;
-  final String imagen;
-  final String nombre;
-  final String info;
-  final num precio;
-  int cantidad;
-
-  Producto({
-    required this.index,
-    required this.imagen,
-    required this.nombre,
-    required this.info,
-    required this.precio,
-    this.cantidad = 1,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final double width = MediaQuery.of(context).size.width;
-    final double height = MediaQuery.of(context).size.height;
-
+  Widget _buildProductoItem(BuildContext context, Producto producto) {
     return GestureDetector(
-      onTap: () => _handleSubmit(context, this.index),
+      onTap: () => onProductoTap(producto),
       child: Container(
-        width: width * 0.35,
-        height: height * 0.35,
+        width: MediaQuery.of(context).size.width * 0.35,
+        height: MediaQuery.of(context).size.height * 0.35,
         decoration: Styles.productoDecoration,
         child: Padding(
           padding: EdgeInsets.all(10.0),
@@ -222,12 +208,12 @@ class Producto extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  width: width * 0.24,
-                  height: height * 0.24,
+                  width: MediaQuery.of(context).size.width * 0.24,
+                  height: MediaQuery.of(context).size.height * 0.24,
                   child: Hero(
-                    tag: 'control',
+                    tag: 'producto-${producto.index}',
                     child: Image.asset(
-                      this.imagen,
+                      producto.imagen,
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -235,8 +221,8 @@ class Producto extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(this.nombre, style: Styles.nombreTextStyle),
-                    Text(this.info, style: Styles.infoTextStyle),
+                    Text(producto.nombre, style: Styles.nombreTextStyle),
+                    Text(producto.info, style: Styles.infoTextStyle),
                   ],
                 ),
               ],
@@ -248,23 +234,15 @@ class Producto extends StatelessWidget {
   }
 }
 
-void _handleSubmit(BuildContext context, int index) {
-  Navigator.push(
-    context,
-    StackPagesRoute(
-      previousPages: [ProductosPage()],
-      enterPage: CompraPage(
-        imageIndex: index,
-      ),
-    ),
-  );
-}
-
 class Bottom extends StatefulWidget {
   final Function(String) onSearchChanged;
   final VoidCallback onAccountPressed;
 
-  Bottom({required this.onSearchChanged, required this.onAccountPressed});
+  const Bottom({
+    required this.onSearchChanged,
+    required this.onAccountPressed,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _BottomState createState() => _BottomState();
@@ -321,53 +299,165 @@ class _BottomState extends State<Bottom> {
             children: [
               IconButton(
                 onPressed: () {},
-                icon: Icon(
-                  Icons.home,
-                  color: Styles.iconColor,
-                  size: Styles.iconSize,
-                ),
+                icon: Icon(Icons.home,
+                    color: Styles.iconColor, size: Styles.iconSize),
               ),
               IconButton(
-                onPressed: () {
-                  setState(() {
-                    _showSearchBar = !_showSearchBar;
-                  });
-                },
-                icon: Icon(
-                  Icons.search,
-                  color: Styles.iconColor,
-                  size: Styles.iconSize,
-                ),
+                onPressed: () =>
+                    setState(() => _showSearchBar = !_showSearchBar),
+                icon: Icon(Icons.search,
+                    color: Styles.iconColor, size: Styles.iconSize),
               ),
               IconButton(
                 onPressed: widget.onAccountPressed,
-                icon: Icon(
-                  Icons.account_circle_outlined,
-                  color: Styles.iconColor,
-                  size: Styles.iconSize,
-                ),
+                icon: Icon(Icons.account_circle_outlined,
+                    color: Styles.iconColor, size: Styles.iconSize),
               ),
               IconButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     StackPagesRoute(
-                      previousPages: [CompraPage(imageIndex: 1)],
+                      previousPages: [ProductosPage()],
                       enterPage: CarritoPage(),
                     ),
                   );
                 },
-                icon: Icon(
-                  Icons.shopping_cart_outlined,
-                  color: Styles.iconColor,
-                  size: Styles.iconSize,
-                ),
+                icon: Icon(Icons.shopping_cart_outlined,
+                    color: Styles.iconColor, size: Styles.iconSize),
               ),
             ],
           ),
         ],
       ),
     );
+  }
+}
+
+class Producto extends StatelessWidget {
+  final int index;
+  final String imagen;
+  final String nombre;
+  final String info;
+  final num precio;
+  final List<Map<String, String>>? features;
+  int cantidad;
+
+  Producto({
+    required this.index,
+    required this.imagen,
+    required this.nombre,
+    required this.info,
+    required this.precio,
+    this.features,
+    this.cantidad = 1,
+  });
+
+  factory Producto.fromJson(Map<String, dynamic> json) {
+    return Producto(
+      index: json['index'],
+      imagen: json['imagen'],
+      nombre: json['nombre'],
+      info: json['info'],
+      precio: json['precio'],
+      features: json['features'] != null
+          ? List<Map<String, String>>.from(json['features'])
+          : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'index': index,
+      'imagen': imagen,
+      'nombre': nombre,
+      'info': info,
+      'precio': precio,
+      'features': features,
+      'cantidad': cantidad,
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
+    return GestureDetector(
+      child: Container(
+        width: width * 0.35,
+        height: height * 0.35,
+        decoration: Styles.productoDecoration,
+        child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width: width * 0.24,
+                  height: height * 0.24,
+                  child: Hero(
+                    tag: 'producto-$index',
+                    child: Image.asset(
+                      imagen,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(nombre, style: Styles.nombreTextStyle),
+                    Text(info, style: Styles.infoTextStyle),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Producto copyWith({
+    int? index,
+    String? imagen,
+    String? nombre,
+    String? info,
+    num? precio,
+    List<Map<String, String>>? features,
+    int? cantidad,
+  }) {
+    return Producto(
+      index: index ?? this.index,
+      imagen: imagen ?? this.imagen,
+      nombre: nombre ?? this.nombre,
+      info: info ?? this.info,
+      precio: precio ?? this.precio,
+      features: features ?? this.features,
+      cantidad: cantidad ?? this.cantidad,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Producto &&
+        other.index == index &&
+        other.imagen == imagen &&
+        other.nombre == nombre &&
+        other.info == info &&
+        other.precio == precio;
+  }
+
+  @override
+  int get hashCode {
+    return index.hashCode ^
+        imagen.hashCode ^
+        nombre.hashCode ^
+        info.hashCode ^
+        precio.hashCode;
   }
 }
 

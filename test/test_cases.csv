@@ -1,0 +1,3 @@
+description,email,password,expectedProductCount
+"Caso 1","yanis@email.com","123456",4
+"Caso 2","testuser@email.com","password123",4
